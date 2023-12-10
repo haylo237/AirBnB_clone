@@ -1,4 +1,6 @@
-#!/usr/bin/python3
+
+#
+/usr/bin/python3
 """Module for FileStorage class."""
 
 import json
@@ -92,4 +94,5 @@ class FileStorage:
                          "user_id": str,
                          "text": str}
         }
+
         return attributes
