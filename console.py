@@ -34,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             uid = args
             attr_or_dict = False
-
+"""
         attr_and_value = ""
         if method == "update" and attr_or_dict:
             match_dict = re.search('^({.*})$', attr_or_dict)
@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
         command = method + " " + classname + " " + uid + " " + attr_and_value
         self.onecmd(command)
         return command
-
+"""
     def update_dict(self, classname, uid, s_dict):
         """Helper method for update() with a dictionary."""
         s = s_dict.replace("'", '"')
@@ -212,7 +212,6 @@ class HBNBCommand(cmd.Cmd):
                         pass  # fine, stay a string then
                 setattr(storage.all()[key], attribute, value)
                 storage.all()[key].save()
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
