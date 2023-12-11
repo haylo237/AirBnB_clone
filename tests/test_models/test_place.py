@@ -201,12 +201,14 @@ class TestPlace_to_dict(unittest.TestCase):
     def test_to_dict_type(self):
         self.assertTrue(dict, type(Place().to_dict()))
 
+
     def test_to_dict_contains_correct_keys(self):
         pl = Place()
         self.assertIn("id", pl.to_dict())
         self.assertIn("created_at", pl.to_dict())
         self.assertIn("updated_at", pl.to_dict())
         self.assertIn("__class__", pl.to_dict())
+
 
     def test_to_dict_contains_added_attributes(self):
         pl = Place()
@@ -215,12 +217,14 @@ class TestPlace_to_dict(unittest.TestCase):
         self.assertEqual("Holberton", pl.middle_name)
         self.assertIn("my_number", pl.to_dict())
 
+
     def test_to_dict_datetime_attributes_are_strs(self):
         pl = Place()
         pl_dict = pl.to_dict()
         self.assertEqual(str, type(pl_dict["id"]))
         self.assertEqual(str, type(pl_dict["created_at"]))
         self.assertEqual(str, type(pl_dict["updated_at"]))
+
 
     def test_to_dict_output(self):
         dt = datetime.today()
