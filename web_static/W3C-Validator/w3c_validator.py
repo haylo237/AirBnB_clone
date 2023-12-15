@@ -31,24 +31,23 @@ Exit status is the # of errors, 0 on Success
 
 References
 
+
 https://developer.mozilla.org/en-US/
+
 
 """
 import sys
 import requests
-
 
 def __print_stdout(msg):
     """Print message in STDOUT
     """
     sys.stdout.write(msg)
 
-
 def __print_stderr(msg):
     """Print message in STDERR
     """
     sys.stderr.write(msg)
-
 
 def __analyse_html(file_path):
     """Start analyse of HTML file
@@ -63,7 +62,6 @@ def __analyse_html(file_path):
         res.append("[{}:{}] {}".format(file_path, m['lastLine'], m['message']))
     return res
 
-
 def __analyse_css(file_path):
     """Start analyse of CSS file
     """
@@ -76,7 +74,6 @@ def __analyse_css(file_path):
     for e in errors:
         res.append("[{}:{}] {}".format(file_path, e['line'], e['message']))
     return res
-
 
 def __analyse(file_path):
     """Start analyse of a file and print the result
@@ -100,7 +97,6 @@ def __analyse(file_path):
         __print_stderr("[{}] {}\n".format(e.__class__.__name__, e))
     return nb_errors
 
-
 def __files_loop():
     """Loop that analyses for each file from input arguments
     """
@@ -109,7 +105,6 @@ def __files_loop():
         nb_errors += __analyse(file_path)
 
     return nb_errors
-
 
 if __name__ == "__main__":
     """Main
