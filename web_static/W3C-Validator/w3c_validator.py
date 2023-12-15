@@ -39,15 +39,28 @@ https://developer.mozilla.org/en-US/
 import requests
 import sys
 
+def __print_stderr(msg):
+    """Print message in STDERR
+    """
+    sys.stderr.write(msg)
+
 def __print_stdout(msg):
     """Print message in STDOUT
     """
     sys.stdout.write(msg)
 
-def __print_stderr(msg):
-    """Print message in STDERR
+def __analyse_css(file_path):
+    """Start analyse of CSS file
     """
-    sys.stderr.write(msg)
+    d = {'output': "json"}
+    f = {'file': (file_path, open(file_path, 'rb'), 'text/css')}
+    u = "http://jigsaw.w3.org/css-validator/validator"
+    r = requests.post(u, data=d, files=f)
+    res = []
+    errors = r.json().get('cssvalidation', {}).get('errors', [])
+    for e in errors:
+        res.append("[{}:{}] {}".format(file_path, e['line'], e['message']))
+    return res
 
 def __analyse_html(file_path):
     """Start analyse of HTML file
@@ -62,18 +75,14 @@ def __analyse_html(file_path):
         res.append("[{}:{}] {}".format(file_path, m['lastLine'], m['message']))
     return res
 
-def __analyse_css(file_path):
-    """Start analyse of CSS file
+def __files_loop():
+    """Loop that analyses for each file from input arguments
     """
-    d = {'output': "json"}
-    f = {'file': (file_path, open(file_path, 'rb'), 'text/css')}
-    u = "http://jigsaw.w3.org/css-validator/validator"
-    r = requests.post(u, data=d, files=f)
-    res = []
-    errors = r.json().get('cssvalidation', {}).get('errors', [])
-    for e in errors:
-        res.append("[{}:{}] {}".format(file_path, e['line'], e['message']))
-    return res
+    nb_errors = 0
+    for file_path in sys.argv[1:]:
+        nb_errors += __analyse(file_path)
+
+    return nb_errors
 
 def __analyse(file_path):
     """Start analyse of a file and print the result
@@ -95,15 +104,6 @@ def __analyse(file_path):
 
     except Exception as e:
         __print_stderr("[{}] {}\n".format(e.__class__.__name__, e))
-    return nb_errors
-
-def __files_loop():
-    """Loop that analyses for each file from input arguments
-    """
-    nb_errors = 0
-    for file_path in sys.argv[1:]:
-        nb_errors += __analyse(file_path)
-
     return nb_errors
 
 if __name__ == "__main__":
