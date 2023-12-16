@@ -1,1 +1,1 @@
-This is our project's web static
+This is Njike Abednego & Patrick Njoroge project on web static
